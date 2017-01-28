@@ -1,4 +1,4 @@
-var mongoose = requrire("mongoose");
+var mongoose = require("mongoose");
 
 var PostSchema = new mongoose.Schema({
 	title: String,
@@ -6,5 +6,10 @@ var PostSchema = new mongoose.Schema({
 	upvotes: { type: Number, default: 0 },
 	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
+
+PostSchema.methods.upvote = function(cb) {
+	this.upvotes++;
+	this.save(cb);
+}
 
 mongoose.model("Post", PostSchema);
